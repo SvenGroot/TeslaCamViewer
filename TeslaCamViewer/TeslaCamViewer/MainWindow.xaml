@@ -108,7 +108,7 @@
                                 <RowDefinition Height="{Binding BottomVideoRowHeight, Mode=TwoWay}" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0" >
-                                <MediaElement x:Name="front" LoadedBehavior="Manual" ScrubbingEnabled="True">
+                                <MediaElement x:Name="front" LoadedBehavior="Manual" MediaFailed="MediaElement_MediaFailed" ScrubbingEnabled="True">
                                     <MediaElement.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectFullVideo}" 
                                                       CommandParameter="{x:Static local:TeslaCamFile+CameraType.FRONT}" />
@@ -125,21 +125,21 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="{Binding RightVideoColumnWidth, Mode=TwoWay}"/>
                                 </Grid.ColumnDefinitions>
-                                <MediaElement x:Name="left" Grid.Column="0" LoadedBehavior="Manual" MediaOpened="MediaElement_MediaOpened" MediaEnded="left_MediaEnded"  ScrubbingEnabled="True">
+                                <MediaElement x:Name="left" Grid.Column="0" LoadedBehavior="Manual" MediaOpened="MediaElement_MediaOpened" MediaFailed="MediaElement_MediaFailed" MediaEnded="left_MediaEnded"  ScrubbingEnabled="True">
                                     <MediaElement.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectFullVideo}" 
                                                       CommandParameter="{x:Static local:TeslaCamFile+CameraType.LEFT_REPEATER}" />
                                     </MediaElement.InputBindings>
                                 </MediaElement>
                                 <GridSplitter Margin="2 0 2 0" Width="2" Grid.Column="1"  VerticalAlignment="Stretch" HorizontalAlignment="Center"  Background="DarkRed" />
-                                <MediaElement x:Name="back" Grid.Column="2" LoadedBehavior="Manual" ScrubbingEnabled="True">
+                                <MediaElement x:Name="back" Grid.Column="2" LoadedBehavior="Manual" MediaFailed="MediaElement_MediaFailed" ScrubbingEnabled="True">
                                     <MediaElement.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectFullVideo}" 
                                                       CommandParameter="{x:Static local:TeslaCamFile+CameraType.BACK}" />
                                     </MediaElement.InputBindings>
                                 </MediaElement>
                                 <GridSplitter Margin="2 0 2 0" Width="2" Grid.Column="3"  VerticalAlignment="Stretch" HorizontalAlignment="Center"  Background="DarkRed" />
-                                <MediaElement x:Name="right" Grid.Column="4" LoadedBehavior="Manual" ScrubbingEnabled="True">
+                                <MediaElement x:Name="right" Grid.Column="4" LoadedBehavior="Manual" MediaFailed="MediaElement_MediaFailed" ScrubbingEnabled="True">
                                     <MediaElement.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectFullVideo}" 
                                                       CommandParameter="{x:Static local:TeslaCamFile+CameraType.RIGHT_REPEATER}" />

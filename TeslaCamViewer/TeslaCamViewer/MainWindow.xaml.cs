@@ -32,9 +32,10 @@ namespace TeslaCamViewer
 
         public void LoadFileSet(TeslaCamFileSet set)
         {
-            left.Stop();
-            right.Stop();
-            front.Stop();
+            left.Close();
+            right.Close();
+            front.Close();
+            back.Close();
             bool playLeft = false;
             bool playRight = false;
             bool playFront = false;
@@ -165,6 +166,7 @@ namespace TeslaCamViewer
                 if (treeview.SelectedItem is TeslaCamFileSet)
                 {
                     var set = treeview.SelectedItem as TeslaCamFileSet;
+                    paused = false;
                     model.LoadFileSet(set);
                 }
             }
@@ -387,6 +389,7 @@ namespace TeslaCamViewer
                         {
                             TeslaCamFileSet nextSet = f.Recordings[currentFileIndex + 1];
 
+                            paused = false;
                             model.LoadFileSet(nextSet);
                             var tvi = FindTviFromObjectRecursive(treeview, nextSet);
 
@@ -422,6 +425,19 @@ namespace TeslaCamViewer
             this.right.SpeedRatio = model.CalculatedPlaybackSpeed;
             this.front.SpeedRatio = model.CalculatedPlaybackSpeed;
             this.back.SpeedRatio = model.CalculatedPlaybackSpeed;
+        }
+
+        private async void MediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            if (!paused)
+            {
+                paused = true;
+                front.Stop();
+                left.Stop();
+                right.Stop();
+                back.Stop();
+                await this.ShowMessageAsync("Video load failure", $"Unable to load the video '{((MediaElement)sender).Source}': {e.ErrorException.Message}");
+            }
         }
     }
 }
