@@ -68,6 +68,24 @@ namespace TeslaCamViewer
                 }
             }
         }
+
+        private GridLength _BackVideoColumnWidth;
+        public GridLength BackVideoColumnWidth
+        {
+            get
+            {
+                return this._BackVideoColumnWidth;
+            }
+            set
+            {
+                if (value != this._BackVideoColumnWidth)
+                {
+                    this._BackVideoColumnWidth = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         private GridLength _RightVideoColumnWidth;
         public GridLength RightVideoColumnWidth
         {
@@ -208,24 +226,36 @@ namespace TeslaCamViewer
                 if (CurrentFullVideo == TeslaCamFile.CameraType.UNKNOWN)
                 {
                     var cam = (TeslaCamFile.CameraType)Camera;
-                    if (cam == TeslaCamFile.CameraType.FRONT)
+                    switch (cam)
                     {
-                        this.BottomVideoRowHeight = new GridLength(0);
-                        this.TopVideoRowHeight = new GridLength(1, GridUnitType.Star);
-                    }
-                    if (cam == TeslaCamFile.CameraType.LEFT_REPEATER)
-                    {
-                        this.TopVideoRowHeight = new GridLength(0);
-                        this.BottomVideoRowHeight = new GridLength(1, GridUnitType.Star);
-                        this.LeftVideoColumnWidth = new GridLength(1, GridUnitType.Star);
-                        this.RightVideoColumnWidth = new GridLength(0);
-                    }
-                    if (cam == TeslaCamFile.CameraType.RIGHT_REPEATER)
-                    {
-                        this.TopVideoRowHeight = new GridLength(0);
-                        this.BottomVideoRowHeight = new GridLength(1, GridUnitType.Star);
-                        this.RightVideoColumnWidth = new GridLength(1, GridUnitType.Star);
-                        this.LeftVideoColumnWidth = new GridLength(0);
+                        case TeslaCamFile.CameraType.FRONT:
+                            this.BottomVideoRowHeight = new GridLength(0);
+                            this.TopVideoRowHeight = new GridLength(1, GridUnitType.Star);
+                            break;
+
+                        case TeslaCamFile.CameraType.LEFT_REPEATER:
+                            this.TopVideoRowHeight = new GridLength(0);
+                            this.BottomVideoRowHeight = new GridLength(1, GridUnitType.Star);
+                            this.LeftVideoColumnWidth = new GridLength(1, GridUnitType.Star);
+                            this.BackVideoColumnWidth = new GridLength(0);
+                            this.RightVideoColumnWidth = new GridLength(0);
+                            break;
+
+                        case TeslaCamFile.CameraType.RIGHT_REPEATER:
+                            this.TopVideoRowHeight = new GridLength(0);
+                            this.BottomVideoRowHeight = new GridLength(1, GridUnitType.Star);
+                            this.RightVideoColumnWidth = new GridLength(1, GridUnitType.Star);
+                            this.LeftVideoColumnWidth = new GridLength(0);
+                            this.BackVideoColumnWidth = new GridLength(0);
+                            break;
+
+                        case TeslaCamFile.CameraType.BACK:
+                            this.TopVideoRowHeight = new GridLength(0);
+                            this.BottomVideoRowHeight = new GridLength(1, GridUnitType.Star);
+                            this.BackVideoColumnWidth = new GridLength(1, GridUnitType.Star);
+                            this.LeftVideoColumnWidth = new GridLength(0, GridUnitType.Pixel);
+                            this.RightVideoColumnWidth = new GridLength(0, GridUnitType.Pixel);
+                            break;
                     }
                     CurrentFullVideo = cam;
                 }
@@ -242,6 +272,7 @@ namespace TeslaCamViewer
             this.BottomVideoRowHeight = new GridLength(1, GridUnitType.Star);
             this.LeftVideoColumnWidth = new GridLength(1, GridUnitType.Star);
             this.RightVideoColumnWidth = new GridLength(1, GridUnitType.Star);
+            this.BackVideoColumnWidth = new GridLength(1, GridUnitType.Star);
         }
         public void LoadFileSet(TeslaCamFileSet set)
         {

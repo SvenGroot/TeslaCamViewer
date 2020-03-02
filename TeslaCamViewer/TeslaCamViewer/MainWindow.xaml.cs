@@ -27,6 +27,7 @@ namespace TeslaCamViewer
         public MediaElement left;
         public MediaElement right;
         public MediaElement front;
+        public MediaElement back;
         public TabControl tabs;
 
         public void LoadFileSet(TeslaCamFileSet set)
@@ -37,6 +38,7 @@ namespace TeslaCamViewer
             bool playLeft = false;
             bool playRight = false;
             bool playFront = false;
+            bool playBack = false;
             foreach (var cam in set.Cameras)
             {
                 if (cam.CameraLocation == TeslaCamFile.CameraType.FRONT)
@@ -54,11 +56,17 @@ namespace TeslaCamViewer
                     this.right.Source = new Uri(cam.FilePath);
                     playRight = true;
                 }
+                if (cam.CameraLocation == TeslaCamFile.CameraType.BACK)
+                {
+                    this.back.Source = new Uri(cam.FilePath);
+                    playBack = true;
+                }
             }
 
             if (playLeft) left.Play();
             if (playRight) right.Play();
             if (playFront) front.Play();
+            if (playBack) back.Play();
             this.tabs.SelectedIndex = 1;
         }
     }
@@ -84,13 +92,18 @@ namespace TeslaCamViewer
             model.VideoModel.left = this.left;
             model.VideoModel.right = this.right;
             model.VideoModel.front = this.front;
+            model.VideoModel.back = this.back;
             model.VideoModel.tabs = this.tabs;
         }
 
 
         private void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
-            TotalTime = left.NaturalDuration.TimeSpan;
+            if (left.NaturalDuration.HasTimeSpan)
+                TotalTime = left.NaturalDuration.TimeSpan;
+            else
+                TotalTime = new TimeSpan();
+
             var timerVideoTime = new DispatcherTimer();
             timerVideoTime.Interval = TimeSpan.FromMilliseconds(100);
             timerVideoTime.Tick += new EventHandler(timer_Tick);
@@ -114,6 +127,7 @@ namespace TeslaCamViewer
                 left.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
                 right.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
                 front.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
+                back.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
             }
         }
 
@@ -122,6 +136,7 @@ namespace TeslaCamViewer
             left.Pause();
             right.Pause();
             front.Pause();
+            back.Pause();
         }
 
         private void timeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -129,6 +144,7 @@ namespace TeslaCamViewer
             left.Play();
             right.Play();
             front.Play();
+            back.Play();
         }
 
         private void timeSlider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
@@ -261,12 +277,14 @@ namespace TeslaCamViewer
                 left.Play();
                 right.Play();
                 front.Play();
+                back.Play();
             }
             else
             {
                 left.Pause();
                 right.Pause();
                 front.Pause();
+                back.Pause();
             }
             paused = !paused;
         }
@@ -387,6 +405,7 @@ namespace TeslaCamViewer
             this.left.SpeedRatio = model.CalculatedPlaybackSpeed;
             this.right.SpeedRatio = model.CalculatedPlaybackSpeed;
             this.front.SpeedRatio = model.CalculatedPlaybackSpeed;
+            this.back.SpeedRatio = model.CalculatedPlaybackSpeed;
         }
     }
 }

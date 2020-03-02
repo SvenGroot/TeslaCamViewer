@@ -17,7 +17,8 @@ namespace TeslaCamViewer
             UNKNOWN,
             LEFT_REPEATER,
             FRONT,
-            RIGHT_REPEATER
+            RIGHT_REPEATER,
+            BACK
         }
         private static readonly Regex FileNameRegex = new Regex("^(?<date>[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2})-(?<camera>[a-z_]*).mp4$");
         public string FilePath { get; private set; }
@@ -49,6 +50,8 @@ namespace TeslaCamViewer
                 file.CameraLocation = CameraType.LEFT_REPEATER;
             else if (cameraType == "right_repeater")
                 file.CameraLocation = CameraType.RIGHT_REPEATER;
+            else if (cameraType == "back")
+                file.CameraLocation = CameraType.BACK;
             else
                 return null;
 
