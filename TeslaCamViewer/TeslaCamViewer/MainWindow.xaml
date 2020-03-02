@@ -125,7 +125,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="{Binding RightVideoColumnWidth, Mode=TwoWay}"/>
                                 </Grid.ColumnDefinitions>
-                                <MediaElement x:Name="left" Grid.Column="0" LoadedBehavior="Manual" MediaOpened="MediaElement_MediaOpened" MediaFailed="MediaElement_MediaFailed" MediaEnded="left_MediaEnded"  ScrubbingEnabled="True">
+                                <MediaElement x:Name="left" Grid.Column="0" LoadedBehavior="Manual" MediaFailed="MediaElement_MediaFailed" MediaEnded="left_MediaEnded"  ScrubbingEnabled="True">
                                     <MediaElement.InputBindings>
                                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding SelectFullVideo}" 
                                                       CommandParameter="{x:Static local:TeslaCamFile+CameraType.LEFT_REPEATER}" />

@@ -95,15 +95,6 @@ namespace TeslaCamViewer
             model.VideoModel.front = this.front;
             model.VideoModel.back = this.back;
             model.VideoModel.tabs = this.tabs;
-        }
-
-
-        private void MediaElement_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            if (left.NaturalDuration.HasTimeSpan)
-                TotalTime = left.NaturalDuration.TimeSpan;
-            else
-                TotalTime = new TimeSpan();
 
             var timerVideoTime = new DispatcherTimer();
             timerVideoTime.Interval = TimeSpan.FromMilliseconds(100);
@@ -113,13 +104,11 @@ namespace TeslaCamViewer
 
         void timer_Tick(object sender, EventArgs e)
         {
-            if (left.NaturalDuration.HasTimeSpan)
-                if (left.NaturalDuration.TimeSpan.TotalSeconds > 0)
-                    if (TotalTime.TotalSeconds > 0)
-                    {
-                        model.RightStatusText = left.Position.ToString(@"mm\:ss") + " / " + TotalTime.ToString(@"mm\:ss");
-                        timeSlider.Value = left.Position.TotalSeconds / TotalTime.TotalSeconds;
-                    }
+            if (left.NaturalDuration.HasTimeSpan && left.NaturalDuration.TimeSpan.TotalSeconds > 0)
+            {
+                model.RightStatusText = left.Position.ToString(@"mm\:ss") + " / " + left.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                timeSlider.Value = left.Position.TotalSeconds / left.NaturalDuration.TimeSpan.TotalSeconds;
+            }
         }
         private void SetPosition()
         {
