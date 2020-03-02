@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TeslaCamViewer
@@ -18,7 +19,7 @@ namespace TeslaCamViewer
             FRONT,
             RIGHT_REPEATER
         }
-        private readonly string FileNameRegex = "([0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2})-([a-z_]*).mp4";
+        private static readonly Regex FileNameRegex = new Regex("^(?<date>[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2})-(?<camera>[a-z_]*).mp4$");
         public string FilePath { get; private set; }
         public string FileName { get { return System.IO.Path.GetFileName(FilePath); } }
         public TeslaCamDate Date { get; private set; }
@@ -26,22 +27,32 @@ namespace TeslaCamViewer
         public string FileDirectory { get { return System.IO.Path.GetDirectoryName(FilePath); } }
         public Uri FileURI { get { return new Uri(this.FilePath); } }
 
-        public TeslaCamFile(string FilePath)
+        private TeslaCamFile()
         {
-            this.FilePath = FilePath;
-            var m = new System.Text.RegularExpressions.Regex(FileNameRegex).Matches(FileName);
-            if (m.Count != 1)
-                throw new Exception("Invalid TeslaCamFile '" + FileName + "'");
-            this.Date = new TeslaCamDate(m[0].Groups[1].Value);
-            string cameraType = m[0].Groups[2].Value;
+        }
+
+        public static TeslaCamFile TryParse(string filePath)
+        {
+            TeslaCamFile file = new TeslaCamFile
+            {
+                FilePath = filePath
+            };
+
+            var m = FileNameRegex.Match(file.FileName);
+            if (!m.Success)
+                return null;
+            file.Date = new TeslaCamDate(m.Groups["date"].Value);
+            string cameraType = m.Groups["camera"].Value;
             if (cameraType == "front")
-                CameraLocation = CameraType.FRONT;
+                file.CameraLocation = CameraType.FRONT;
             else if (cameraType == "left_repeater")
-                CameraLocation = CameraType.LEFT_REPEATER;
+                file.CameraLocation = CameraType.LEFT_REPEATER;
             else if (cameraType == "right_repeater")
-                CameraLocation = CameraType.RIGHT_REPEATER;
+                file.CameraLocation = CameraType.RIGHT_REPEATER;
             else
-                throw new Exception("Invalid Camera Type: '" + cameraType + "'");
+                return null;
+
+            return file;
         }
 
     }

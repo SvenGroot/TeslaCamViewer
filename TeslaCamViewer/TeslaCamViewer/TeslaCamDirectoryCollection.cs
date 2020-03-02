@@ -39,8 +39,8 @@ namespace TeslaCamViewer
             if (BaseFiles.Count() > 0)
             {
                 var baseCollection = new TeslaCamEventCollection();
-                baseCollection.BuildFromDirectory(Directory);
-                this.Events.Add(baseCollection);
+                if (baseCollection.BuildFromDirectory(Directory))
+                    this.Events.Add(baseCollection);
             }
             this.Events = new ObservableCollection<TeslaCamEventCollection>(Events.OrderBy(e => e.StartDate.UTCDateString));
             this.DisplayName = new System.IO.DirectoryInfo(Directory).Name;
