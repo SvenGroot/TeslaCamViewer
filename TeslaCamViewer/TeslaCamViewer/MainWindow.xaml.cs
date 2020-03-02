@@ -141,10 +141,13 @@ namespace TeslaCamViewer
 
         private void timeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            left.Play();
-            right.Play();
-            front.Play();
-            back.Play();
+            if (!paused)
+            {
+                left.Play();
+                right.Play();
+                front.Play();
+                back.Play();
+            }
         }
 
         private void timeSlider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
