@@ -244,7 +244,7 @@ namespace TeslaCamViewer
             }
             catch (Exception ex)
             {
-                this.ShowMessageAsync("Could not load TeslaCam Drive", "An error ocurred: " + ex.Message).Wait();
+                await this.ShowMessageAsync("Could not load TeslaCam Drive", "An error ocurred: " + ex.Message);
             }
         }
 
