@@ -327,7 +327,7 @@ namespace TeslaCamViewer
 
         private void about_Menu_Click(object sender, RoutedEventArgs e)
         {
-            this.ShowMessageAsync("TeslaCam Viewer V0.4.1", "TeslaCam Viewer V0.4.1 Copyright 2019 mattw\n\nSee LICENCES.txt for more information.");
+            this.ShowMessageAsync("TeslaCam Viewer V0.5", "TeslaCam Viewer V0.5 Copyright 2019 mattw\n\nSee LICENCES.txt for more information.");
         }
 
         private void viewOnGitHub_Menu_Click(object sender, RoutedEventArgs e)

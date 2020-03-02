@@ -6,7 +6,7 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:TeslaCamViewer"
         mc:Ignorable="d"           
-        Title="TeslaCam Viewer V0.4.1" TitleCaps="False" Height="525" Width="817"
+        Title="TeslaCam Viewer V0.5" TitleCaps="False" Height="610.991" Width="1069.2"
                         AllowDrop="True"  Drop="Window_Drop" KeyUp="MetroWindow_KeyUp"
                       Loaded="MetroWindow_Loaded">
     <Grid>
@@ -41,9 +41,9 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="33*" MinWidth="15"/>
+                <ColumnDefinition Width="18*" MinWidth="15"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="66*" MinWidth="150"/>
+                <ColumnDefinition Width="82*" MinWidth="150"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -92,7 +92,7 @@
             <TabControl x:Name="tabs" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <TabItem Header="Browse">
                     <Frame x:Name="browseFrame"  NavigationUIVisibility="Hidden">
-                        
+
                     </Frame>
                 </TabItem>
                 <TabItem Header="Play">
@@ -114,7 +114,7 @@
                                                       CommandParameter="{x:Static local:TeslaCamFile+CameraType.FRONT}" />
                                     </MediaElement.InputBindings>
                                 </MediaElement>
-                                
+
                             </Grid>
                             <GridSplitter Margin="2" Height="2" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="DarkRed" />
                             <Grid Grid.Row="2">
