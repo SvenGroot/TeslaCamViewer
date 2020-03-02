@@ -2,6 +2,7 @@
 .DS_Store
 *.suo
 *.user
+TeslaCamViewer/.vs/
 Thumbs.db
 bin
 obj
