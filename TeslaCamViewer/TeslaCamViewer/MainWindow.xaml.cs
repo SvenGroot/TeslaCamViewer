@@ -201,6 +201,7 @@ namespace TeslaCamViewer
                 DirectoryInfo teslaCamDir = null;
                 TeslaCamDirectoryCollection recentClips = null;
                 TeslaCamDirectoryCollection savedClips = null;
+                TeslaCamDirectoryCollection sentryClips = null;
 
                 // Run the following in a worker thread and wait for it to finish
                 await Task.Run(() =>
@@ -222,8 +223,10 @@ namespace TeslaCamViewer
                     if (teslaCamDir != null)
                     {
                         // Get child dirs
-                        var recentClipsDir = teslaCamDir.GetDirectories().FirstOrDefault(e => e.Name == "RecentClips");
-                        var savedClipsDir = teslaCamDir.GetDirectories().FirstOrDefault(e => e.Name == "SavedClips");
+                        var dirs = teslaCamDir.GetDirectories();
+                        var recentClipsDir = dirs.FirstOrDefault(e => e.Name == "RecentClips");
+                        var savedClipsDir = dirs.FirstOrDefault(e => e.Name == "SavedClips");
+                        var sentryClipsDir = dirs.FirstOrDefault(e => e.Name == "SentryClips");
 
                         // Load if found
                         if (recentClipsDir != null)
@@ -238,6 +241,12 @@ namespace TeslaCamViewer
                             savedClips.BuildFromBaseDirectory(savedClipsDir.FullName);
                             savedClips.SetDisplayName("Saved Clips");
                         }
+                        if (sentryClipsDir != null)
+                        {
+                            sentryClips = new TeslaCamDirectoryCollection();
+                            sentryClips.BuildFromBaseDirectory(sentryClipsDir.FullName);
+                            sentryClips.SetDisplayName("Sentry Clips");
+                        }
                     }
                 });
 
@@ -250,6 +259,7 @@ namespace TeslaCamViewer
                     // Add clips to UI tree
                     if (recentClips != null) { this.model.ListItems.Add(recentClips); }
                     if (savedClips != null) { this.model.ListItems.Add(savedClips); }
+                    if (sentryClips != null) { this.model.ListItems.Add(sentryClips); }
 
                     // Navigate
                     this.browseFrame.Navigate(new TeslaCamViewer.Views.RootCollectionView(this.model));
@@ -397,8 +407,11 @@ namespace TeslaCamViewer
             foreach (object i in ic.Items)
             {
                 TreeViewItem tvi2 = ic.ItemContainerGenerator.ContainerFromItem(i) as TreeViewItem;
-                tvi = FindTviFromObjectRecursive(tvi2, o);
-                if (tvi != null) return tvi;
+                if (tvi2 != null)
+                {
+                    tvi = FindTviFromObjectRecursive(tvi2, o);
+                    if (tvi != null) return tvi;
+                }
             }
             return null;
         }
