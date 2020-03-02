@@ -169,7 +169,6 @@
             <StatusBarItem>
                 <TextBlock></TextBlock>
             </StatusBarItem>
-
         </StatusBar>
     </Grid>
 </Controls:MetroWindow>

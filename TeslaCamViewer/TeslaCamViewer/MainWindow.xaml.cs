@@ -78,7 +78,6 @@ namespace TeslaCamViewer
     public partial class MainWindow : MetroWindow
     {
         private MainWindowViewModel model;
-        private TimeSpan TotalTime;
         private bool paused;
 
         public MainWindow()
@@ -112,12 +111,13 @@ namespace TeslaCamViewer
         }
         private void SetPosition()
         {
-            if (TotalTime.TotalSeconds > 0)
+            if (left.NaturalDuration.HasTimeSpan && left.NaturalDuration.TimeSpan.TotalSeconds > 0)
             {
-                left.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
-                right.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
-                front.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
-                back.Position = TimeSpan.FromSeconds(timeSlider.Value * TotalTime.TotalSeconds);
+                var newPosition = TimeSpan.FromSeconds(timeSlider.Value * left.NaturalDuration.TimeSpan.TotalSeconds);
+                left.Position = newPosition;
+                right.Position = newPosition;
+                front.Position = newPosition;
+                back.Position = newPosition;
             }
         }
 
