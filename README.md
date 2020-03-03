@@ -5,7 +5,7 @@ A simple TeslaCam recording viewer to easily sort recordings and view all camera
 This is an updated version of [this viewer](https://github.com/mattw01/TeslaCamViewer), whose
 owner appears to not be taking pull requests anymore.
 
-This version supports the v10 file name format, as well as the back camera, and has fixed a
+This version supports the v10 file name format, the back camera, Sentry Mode, and has fixed a
 few bugs.
 
 ### [Download the Current Release Version](https://github.com/SvenGroot/TeslaCamViewer/releases)
@@ -25,5 +25,5 @@ Looking to buy a Tesla? [Use my referral code!](https://ts.la/sven69698)
 
 ## Screenshots
 ![BrowseMenu](TeslaCamViewer/Screenshots/BrowseMenu1.PNG?raw=true)
-![BrowseScrubDemo](Screenshots/BrowseScrub1.gif?raw=true)
-![BrowseScrubDemo](Screenshots/PlayMenu1.PNG?raw=true)
+![BrowseScrubDemo](TeslaCamViewer/Screenshots/BrowseScrub1.gif?raw=true)
+![BrowseScrubDemo](TeslaCamViewer/Screenshots/PlayMenu1.PNG?raw=true)
